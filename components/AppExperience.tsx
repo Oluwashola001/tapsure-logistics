@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion"; // Ensure Variants is imported if not already
 import Image from "next/image";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 
@@ -9,24 +9,27 @@ export default function AppExperienceFinal() {
   // WhatsApp Configuration
   const whatsappUrl = "https://wa.me/2348123385928?text=Hello,%20Tapsure,%20I%20need...";
 
-  // Animation Variants for cleaner code
-  const containerVariants = {
+  // Animation Variants
+  const containerVariants: Variants = { // Added explicit type to container
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2, // Stagger effect for children
+        staggerChildren: 0.2,
         delayChildren: 0.1,
       },
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = { // Added explicit type to item
     hidden: { opacity: 0, y: 30 },
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.8, ease: "easeOut" }
+      transition: { 
+        duration: 0.8, 
+        ease: "easeOut" as const // <--- THE FIX
+      }
     },
   };
 

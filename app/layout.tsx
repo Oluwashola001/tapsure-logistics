@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: "Seamless shipping, warehousing, and freight solutions tailored for your business growth.",
   // Explicitly link the icon here to override defaults
   icons: {
-    icon: "/logo.png", 
+    icon: "/logox.png", 
   },
 };
 
