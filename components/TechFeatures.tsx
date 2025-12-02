@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion"; // Ensure Variants is imported
 import { MapPin, Bell, Clock, ArrowRight } from "lucide-react";
 
 const features = [
@@ -25,7 +25,8 @@ const features = [
   },
 ];
 
-const containerVariants = {
+// Animation variants for the container (stagger effect)
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -36,12 +37,17 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
+// Animation variants for individual items (spring effect)
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: { 
     opacity: 1, 
     y: 0,
-    transition: { type: "spring", stiffness: 50, damping: 20 }
+    transition: { 
+      type: "spring" as const, // <--- THE CRITICAL FIX: Add 'as const'
+      stiffness: 50, 
+      damping: 20 
+    }
   },
 };
 
