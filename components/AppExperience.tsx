@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion, Variants } from "framer-motion"; // Ensure Variants is imported if not already
+import { motion, Variants } from "framer-motion";
 import Image from "next/image";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 
@@ -9,8 +9,22 @@ export default function AppExperienceFinal() {
   // WhatsApp Configuration
   const whatsappUrl = "https://wa.me/2348123385928?text=Hello,%20Tapsure,%20I%20need...";
 
-  // Animation Variants
-  const containerVariants: Variants = { // Added explicit type to container
+  // Custom Variants for the Arrow Icon's breathing animation
+  const arrowVariants: Variants = {
+    // This defines the "breathing" animation loop for the arrow
+    breathe: {
+      scale: [1, 1.1, 1], // Scale up and down
+      x: [0, 5, 0], // Move slightly to the right and back
+      transition: {
+        duration: 1.5,
+        ease: "easeInOut",
+        repeat: Infinity, // Keep repeating the animation
+      },
+    },
+  };
+
+  // Animation Variants for the section content
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -21,14 +35,14 @@ export default function AppExperienceFinal() {
     },
   };
 
-  const itemVariants: Variants = { // Added explicit type to item
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: { 
       opacity: 1, 
       y: 0,
       transition: { 
         duration: 0.8, 
-        ease: "easeOut" as const // <--- THE FIX
+        ease: "easeOut" as const
       }
     },
   };
@@ -47,10 +61,7 @@ export default function AppExperienceFinal() {
         className="max-w-7xl mx-auto h-full px-6 md:px-12 relative z-20 flex flex-col md:flex-row"
       >
         
-        {/* LEFT: The Hand Mockup Container
-            - Mobile: Order 1. Added '-ml-12' (Shifted further left).
-            - Desktop: Order 0.
-        */}
+        {/* LEFT: The Hand Mockup Container */}
         <div className="-ml-6 relative order-1 md:order-none w-full h-[500px] md:absolute md:bottom-0 md:left-0 md:h-full md:w-[70%] z-10 pointer-events-none">
           <motion.div 
             variants={itemVariants}
@@ -102,18 +113,35 @@ export default function AppExperienceFinal() {
             ))}
           </div>
 
-          {/* WHATSAPP LINKED BUTTON (Converted from button to motion.a) */}
+          {/* NEW WHATSAPP LINKED ARROW (motion.a) */}
           <motion.a 
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
             variants={itemVariants}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-white text-black px-8 py-4 rounded-full font-bold hover:bg-slate-200 transition-colors shadow-lg shadow-white/5 flex items-center gap-2 group w-fit cursor-pointer"
+            whileTap={{ scale: 0.98 }}
+            className="group relative flex flex-col justify-center items-start w-fit cursor-pointer outline-none"
           >
-            <span>Contact Us</span>
-            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            {/* The Text Label */}
+            <span className="text-blue-500 font-bold mb-1 text-lg">
+              Learn More
+            </span>
+            
+            {/* The Animated Arrow Container (long pointed arrow) */}
+            <motion.div
+              variants={arrowVariants}
+              animate="breathe" // Start the breathing animation
+              className="flex items-center"
+            >
+              {/* The Arrow Line */}
+              <div className="h-0.5 w-24 bg-blue-500 rounded-full transition-all group-hover:w-32" />
+
+              {/* The Arrow Head */}
+              <ArrowRight 
+                size={24} 
+                className="text-blue-500 ml-1" 
+              />
+            </motion.div>
           </motion.a>
         </motion.div>
 
